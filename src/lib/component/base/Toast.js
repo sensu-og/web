@@ -103,7 +103,7 @@ export const styles = theme => {
       backgroundColor: theme.palette.primary.dark,
     },
     warning: {
-      backgroundColor: theme.palette.warning.main,
+      backgroundColor: theme.palette.warning.secondary,
     },
     icon: {
       fontSize: 20,

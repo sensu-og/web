@@ -119,9 +119,9 @@ export const styles = theme => {
       },
     },
     warning: {
-      backgroundColor: theme.palette.warning.main,
+      backgroundColor: theme.palette.warning.secondary,
       "&::before": {
-        backgroundColor: theme.palette.warning.main,
+        backgroundColor: theme.palette.warning.secondary,
       },
     },
     icon: {

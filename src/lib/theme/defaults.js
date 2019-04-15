@@ -3,7 +3,7 @@ const defaults = {
   direction: "ltr",
   palette: {
     success: { main: "rgb(151, 198, 115)", secondary: "rgb(151, 198, 115)" },
-    warning: { main: "rgb(213, 171, 59)" },
+    warning: { main: "rgb(213, 171, 59)", secondary: "rgb(255,160,0)" },
     critical: { main: "rgb(204, 62, 100)" },
     unknown: { main: "rgb(211, 97, 53)" },
   },
