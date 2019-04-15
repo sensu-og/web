@@ -144,6 +144,22 @@ class Preferences extends React.Component {
                 <ListItemText primary="Uchiwa" secondary="Cool in blue." />
               </ListItem>
             </MenuItem>
+            <MenuItem onClick={this.handleThemeSelect("deuteranomaly")}>
+              <ListItem>
+                <ListItemText
+                  primary="Deuteranomaly"
+                  secondary="Colour blindess support for red-green."
+                />
+              </ListItem>
+            </MenuItem>
+            <MenuItem onClick={this.handleThemeSelect("tritanomaly")}>
+              <ListItem>
+                <ListItemText
+                  primary="Tritanomaly"
+                  secondary="Colour blindess support for blue-yellow."
+                />
+              </ListItem>
+            </MenuItem>
           </MenuList>
         </Menu>
       </Dialog>
