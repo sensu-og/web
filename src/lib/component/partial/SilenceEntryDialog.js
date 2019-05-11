@@ -1,6 +1,10 @@
 import React from "/vendor/react";
 import PropTypes from "prop-types";
 import { withApollo } from "/vendor/react-apollo";
+import {
+  useStatus as useFormStatus,
+  useContext as useFormContext,
+} from "/vendor/@10xjs/form";
 
 import {
   withStyles,
@@ -27,6 +31,59 @@ import {
 const StyledDialogContentText = withStyles(() => ({
   root: { marginBottom: "2rem" },
 }))(DialogContentText);
+
+// eslint-disable-next-line react/prop-types
+const SilenceEntryDialogContents = ({ onClose, fullScreen }) => {
+  const { submit } = useFormContext();
+  const { hasErrors, submitting, submitFailed, touched } = useFormStatus();
+
+  const close = () => {
+    if (!submitting) {
+      onClose();
+    }
+  };
+
+  return (
+    <Dialog open fullScreen={fullScreen} onClose={close}>
+      <Loader loading={submitting} passthrough>
+        <DialogTitle>New Silencing Entry</DialogTitle>
+        <DialogContent>
+          <StyledDialogContentText>
+            Create a silencing entry to temporarily prevent check result
+            handlers from being triggered. A full reference to check silencing
+            is available on the Sensu docs site.
+            <br />
+            <a
+              href="https://docs.sensu.io/sensu-core/2.0/reference/silencing/"
+              target="_docs"
+            >
+              Learn more
+            </a>
+          </StyledDialogContentText>
+          <div>
+            <SilenceEntryFormFields />
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={close} color="primary">
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              submit();
+            }}
+            color="primary"
+            variant="raised"
+            autoFocus
+            disabled={((touched || submitFailed) && hasErrors) || submitting}
+          >
+            Create
+          </Button>
+        </DialogActions>
+      </Loader>
+    </Dialog>
+  );
+};
 
 class SilenceEntryDialog extends React.PureComponent {
   static propTypes = {
@@ -56,54 +113,7 @@ class SilenceEntryDialog extends React.PureComponent {
           console.log("Created silencing entries", silences);
         }}
       >
-        {({ submit, hasErrors, submitting }) => {
-          const close = () => {
-            if (!submitting) {
-              onClose();
-            }
-          };
-
-          return (
-            <Dialog open fullScreen={fullScreen} onClose={close}>
-              <Loader loading={submitting} passthrough>
-                <DialogTitle>New Silencing Entry</DialogTitle>
-                <DialogContent>
-                  <StyledDialogContentText>
-                    Create a silencing entry to temporarily prevent check result
-                    handlers from being triggered. A full reference to check
-                    silencing is available on the Sensu docs site.
-                    <br />
-                    <a
-                      href="https://docs.sensu.io/sensu-core/2.0/reference/silencing/"
-                      target="_docs"
-                    >
-                      Learn more
-                    </a>
-                  </StyledDialogContentText>
-                  <div>
-                    <SilenceEntryFormFields />
-                  </div>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={close} color="primary">
-                    Cancel
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      submit();
-                    }}
-                    color="primary"
-                    variant="raised"
-                    autoFocus
-                    disabled={hasErrors || submitting}
-                  >
-                    Create
-                  </Button>
-                </DialogActions>
-              </Loader>
-            </Dialog>
-          );
-        }}
+        <SilenceEntryDialogContents onClose={onClose} fullScreen={fullScreen} />
       </SilenceEntryForm>
     );
   }

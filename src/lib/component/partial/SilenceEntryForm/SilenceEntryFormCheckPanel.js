@@ -1,6 +1,12 @@
+/* eslint-disable react/prop-types */
+
 import React from "/vendor/react";
-import PropTypes from "prop-types";
-import { Field } from "/vendor/@10xjs/form";
+import {
+  useField,
+  input,
+  useStatus,
+  useFieldStatus,
+} from "/vendor/@10xjs/form";
 import { withStyles, Typography, TextField } from "/vendor/@material-ui/core";
 
 import ResetAdornment from "/lib/component/partial/ResetAdornment";
@@ -11,44 +17,43 @@ const MonoTextField = withStyles(theme => ({
   root: { "& input": { fontFamily: theme.typography.monospace.fontFamily } },
 }))(TextField);
 
-class SilenceEntryFormCheckPanel extends React.PureComponent {
-  static propTypes = {
-    formatError: PropTypes.func.isRequired,
-  };
+const SilenceEntryFormCheckPanel = ({ formatError }) => {
+  const check = useField("check");
+  const subscription = useFieldStatus("subscription");
+  const { submitFailed } = useStatus();
 
-  render() {
-    const { formatError } = this.props;
+  const error =
+    check.touched || subscription.touched || submitFailed
+      ? formatError(check.error)
+      : "";
 
-    return (
-      <Field path="check">
-        {({ input, rawValue, error, dirty, initialValue, setValue }) => (
-          <Panel
-            title="Check"
-            summary={input.value || "all checks"}
-            hasDefaultValue={!rawValue}
-            error={formatError(error)}
-          >
-            <Typography color="textSecondary">
-              Enter the name of a check the silencing entry should match.
-            </Typography>
+  return (
+    <Panel
+      title="Check"
+      summary={check.value || "all checks"}
+      hasDefaultValue={!check.value}
+      error={error}
+    >
+      <Typography color="textSecondary">
+        Enter the name of a check the silencing entry should match.
+      </Typography>
 
-            <MonoTextField
-              label="Check"
-              fullWidth
-              margin="normal"
-              error={!!formatError(error)}
-              InputProps={{
-                endAdornment: initialValue && dirty && (
-                  <ResetAdornment onClick={() => setValue(initialValue)} />
-                ),
-              }}
-              {...input}
+      <MonoTextField
+        label="Check"
+        fullWidth
+        margin="normal"
+        error={!!error}
+        InputProps={{
+          endAdornment: check.initialValue && check.dirty && (
+            <ResetAdornment
+              onClick={() => check.setValue(check.initialValue)}
             />
-          </Panel>
-        )}
-      </Field>
-    );
-  }
-}
+          ),
+        }}
+        {...input(check)}
+      />
+    </Panel>
+  );
+};
 
 export default SilenceEntryFormCheckPanel;

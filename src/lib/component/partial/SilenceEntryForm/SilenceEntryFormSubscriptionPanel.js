@@ -1,6 +1,10 @@
 import React from "/vendor/react";
-import PropTypes from "prop-types";
-import { Field } from "/vendor/@10xjs/form";
+import {
+  useField,
+  useStatus,
+  useFieldStatus,
+  input,
+} from "/vendor/@10xjs/form";
 
 import { withStyles, Typography, TextField } from "/vendor/@material-ui/core";
 
@@ -13,46 +17,44 @@ const MonoTextField = withStyles(theme => ({
   root: { "& input": { fontFamily: theme.typography.monospace.fontFamily } },
 }))(TextField);
 
-class SilenceEntryFormSubscriptionPanel extends React.PureComponent {
-  static propTypes = {
-    formatError: PropTypes.func.isRequired,
-  };
+const SilenceEntryFormSubscriptionPanel = ({ formatError }) => {
+  const subscription = useField("subscription");
+  const check = useFieldStatus("check");
+  const { submitFailed } = useStatus();
 
-  render() {
-    const { formatError } = this.props;
+  const error =
+    check.touched || subscription.touched || submitFailed
+      ? formatError(subscription.error)
+      : "";
 
-    return (
-      <Field path="subscription">
-        {({ input, rawValue, error, dirty, initialValue, setValue }) => (
-          <Panel
-            title="Subscription"
-            summary={input.value || "all entities"}
-            hasDefaultValue={!rawValue}
-            error={formatError(error)}
-          >
-            <Typography color="textSecondary">
-              Enter the name of the subscription the entry should match. Use the
-              format <Code>entity:$ENTITY_NAME</Code> to match a specific
-              entity.
-            </Typography>
+  return (
+    <Panel
+      title="Subscription"
+      summary={subscription.value || "all entities"}
+      hasDefaultValue={!subscription}
+      error={error}
+    >
+      <Typography color="textSecondary">
+        Enter the name of the subscription the entry should match. Use the
+        format <Code>entity:$ENTITY_NAME</Code> to match a specific entity.
+      </Typography>
 
-            <MonoTextField
-              label="Subscription"
-              fullWidth
-              margin="normal"
-              error={!!formatError(error)}
-              InputProps={{
-                endAdornment: initialValue && dirty && (
-                  <ResetAdornment onClick={() => setValue(initialValue)} />
-                ),
-              }}
-              {...input}
+      <MonoTextField
+        label="Subscription"
+        fullWidth
+        margin="normal"
+        error={!!error}
+        InputProps={{
+          endAdornment: subscription.initialValue && subscription.dirty && (
+            <ResetAdornment
+              onClick={() => subscription.setValue(subscription.initialValue)}
             />
-          </Panel>
-        )}
-      </Field>
-    );
-  }
-}
+          ),
+        }}
+        {...input(subscription)}
+      />
+    </Panel>
+  );
+};
 
 export default SilenceEntryFormSubscriptionPanel;

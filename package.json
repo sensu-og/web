@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@10xjs/date-input-controller": "0.1.6",
-    "@10xjs/form": "^0.1.7",
+    "@10xjs/form": "^0.0.0-5d65c7914",
     "@babel/core": "^7.0.0",
     "@babel/plugin-proposal-class-properties": "^7.0.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",

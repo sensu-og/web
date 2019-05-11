@@ -1,5 +1,5 @@
 import React from "/vendor/react";
-import { Field } from "/vendor/@10xjs/form";
+import { useField } from "/vendor/@10xjs/form";
 
 import {
   UNIQUE_CONSTRAINT,
@@ -27,22 +27,24 @@ const formatCheckSubscriptionError = error => {
   );
 };
 
+const Targets = () => {
+  const targets = useField("targets");
+
+  return Array.isArray(targets.value) ? (
+    <TargetsPanel formatError={formatCheckSubscriptionError} />
+  ) : (
+    <React.Fragment>
+      <CheckPanel formatError={formatCheckSubscriptionError} />
+      <SubscriptionPanel formatError={formatCheckSubscriptionError} />
+    </React.Fragment>
+  );
+};
+
 class SilenceEntryFormFields extends React.PureComponent {
   render() {
     return (
       <React.Fragment>
-        <Field path="targets">
-          {({ rawValue }) =>
-            Array.isArray(rawValue) ? (
-              <TargetsPanel formatError={formatCheckSubscriptionError} />
-            ) : (
-              <React.Fragment>
-                <CheckPanel formatError={formatCheckSubscriptionError} />
-                <SubscriptionPanel formatError={formatCheckSubscriptionError} />
-              </React.Fragment>
-            )
-          }
-        </Field>
+        <Targets />
         <SchedulePanel />
         <ExpirationPanel />
         <ReasonPanel />

@@ -1,5 +1,3 @@
-import { set, parsePath } from "/vendor/@10xjs/form";
-
 export const REQUIRED = "VALIDATION_REQUIRED";
 export const UNIQUE_CONSTRAINT = "VALIDATION_UNIQUE_CONSTRAINT";
 
@@ -38,5 +36,6 @@ export const parseValidationErrors = errors =>
     }
 
     const { input, ...rest } = error;
-    return set(result, parsePath(input), rest);
+    // return set(result, parsePath(input), rest);
+    return result;
   }, {});
