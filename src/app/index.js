@@ -40,6 +40,7 @@ import {
   CheckDetailsView,
   EventDetailsView,
   EntityDetailsView,
+  HandlerDetailsView,
   NamespaceNotFoundView,
 } from "/lib/component/view";
 
@@ -109,6 +110,10 @@ const renderApp = () => {
                     <Route
                       path={`${props.match.path}/entities/:entity`}
                       component={EntityDetailsView}
+                    />
+                    <Route
+                      path={`${props.match.path}/handlers/:handler`}
+                      component={HandlerDetailsView}
                     />
                     <Route
                       path={`${props.match.path}/checks`}
