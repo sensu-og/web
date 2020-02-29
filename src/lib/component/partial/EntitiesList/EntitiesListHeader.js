@@ -42,6 +42,7 @@ class EntitiesListHeader extends React.PureComponent {
   static fragments = {
     namespace: gql`
       fragment EntitiesListHeader_namespace on Namespace {
+        id
         subscriptions(orderBy: OCCURRENCES, omitEntity: true) {
           values(limit: 25)
         }

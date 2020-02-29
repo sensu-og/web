@@ -18,6 +18,7 @@ const NamespaceLabel = (props: Props) => {
 NamespaceLabel.fragments = {
   namespace: gql`
     fragment NamespaceLabel_namespace on Namespace {
+      id
       name
     }
   `,

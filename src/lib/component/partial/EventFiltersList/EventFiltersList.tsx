@@ -28,6 +28,7 @@ export interface EventFiltersListVariables {
 export const eventFiltersListFragments = {
   namespace: gql`
     fragment EventFiltersList_namespace on Namespace {
+      id
       eventFilters(
         limit: $limit
         offset: $offset

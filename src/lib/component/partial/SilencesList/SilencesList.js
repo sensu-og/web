@@ -50,6 +50,7 @@ class SilencesList extends React.Component {
   static fragments = {
     namespace: gql`
       fragment SilencesList_namespace on Namespace {
+        id
         silences(
           limit: $limit
           offset: $offset

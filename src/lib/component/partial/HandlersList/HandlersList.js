@@ -112,6 +112,7 @@ HandlersList.defaultProps = {
 HandlersList.fragments = {
   namespace: gql`
     fragment HandlersList_namespace on Namespace {
+      id
       handlers(
         limit: $limit
         offset: $offset

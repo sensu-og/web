@@ -306,6 +306,8 @@ EventsList.defaultProps = {
 EventsList.fragments = {
   namespace: gql`
     fragment EventsList_namespace on Namespace {
+      id
+
       checks(limit: 1000) {
         nodes {
           name

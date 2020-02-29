@@ -115,6 +115,7 @@ MutatorsList.defaultProps = {
 MutatorsList.fragments = {
   namespace: gql`
     fragment MutatorsList_namespace on Namespace {
+      id
       mutators(
         limit: $limit
         offset: $offset

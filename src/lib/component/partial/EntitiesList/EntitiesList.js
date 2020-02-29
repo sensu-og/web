@@ -49,6 +49,7 @@ class EntitiesList extends React.PureComponent {
   static fragments = {
     namespace: gql`
       fragment EntitiesList_namespace on Namespace {
+        id
         entities(
           limit: $limit
           offset: $offset

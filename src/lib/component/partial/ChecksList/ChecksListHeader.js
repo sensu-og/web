@@ -41,6 +41,7 @@ class ChecksListHeader extends React.PureComponent {
   static fragments = {
     namespace: gql`
       fragment ChecksListHeader_namespace on Namespace {
+        id
         subscriptions(orderBy: OCCURRENCES, omitEntity: true) {
           values(limit: 25)
         }

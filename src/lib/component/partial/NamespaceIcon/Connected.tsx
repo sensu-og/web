@@ -41,6 +41,7 @@ const NamespaceIcon = (props: Props) => {
 NamespaceIcon.fragments = {
   namespace: gql`
     fragment NamespaceIcon_namespace on Namespace {
+      id
       name
     }
   `,

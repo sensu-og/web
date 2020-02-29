@@ -36,6 +36,8 @@ class SilencesListHeader extends React.PureComponent {
   static fragments = {
     namespace: gql`
       fragment SilencesListHeader_namespace on Namespace {
+        id
+
         subscriptions(orderBy: OCCURRENCES, omitEntity: true) {
           values(limit: 25)
         }

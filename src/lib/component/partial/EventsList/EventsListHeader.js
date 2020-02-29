@@ -53,6 +53,7 @@ class EventsListHeader extends React.Component {
     `,
     namespace: gql`
       fragment EventsListHeader_namespace on Namespace {
+        id
         checks(limit: 1000) {
           nodes {
             name
